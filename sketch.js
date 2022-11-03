@@ -16,7 +16,7 @@ var gameState = PLAY;
 var distance=0;
 var gameOver, restart;
 
-var wind,wind1;
+var obstacleImage,obstacleImage2;
 
 
 function preload(){
@@ -36,8 +36,8 @@ function preload(){
   cycleBell = loadSound("bell.mp3");
   gameOverImg = loadImage("gameOver.png");
 
-  wind = loadImage("obstacle1.png");
-  wind1 = loadImage("obstacle3.png");
+  obstacleImage = loadImage("obstacle1.png");
+  obstacleImage2 = loadImage("obstacle3.png");
 
 }
 
@@ -69,7 +69,7 @@ pinkCG = new Group();
 yellowCG = new Group();
 redCG = new Group();
   
-winCG = new Group();
+obstacleImageCG = new Group();
 
 }
 
@@ -109,9 +109,14 @@ function draw() {
       pinkCyclists();
     } else if (select_oppPlayer == 2) {
       yellowCyclists();
+    } else if (select_oppPlayer == 3) {
+      redCyclists();;
     } else {
-      redCyclists();
+      like();
     }
+
+    }
+  
   }
   
    if(pinkCG.isTouching(mainCyclist)){
@@ -132,7 +137,7 @@ function draw() {
       player3.addAnimation("opponentPlayer3",oppRed2Img);
     }
      
-    if(winCG.isTouching(mainCyclist)){
+    if(obstacleImageCG.isTouching(mainCyclist)){
       gameState = END;
       obstacle1.velocityY = 0;
       obstacle1.addAnimation("windy",wind1);
@@ -140,7 +145,7 @@ function draw() {
 
 
 
-}else if (gameState === END) {
+  else if (gameState === END) {
     gameOver.visible = true;
   
     textSize(20);
@@ -163,7 +168,7 @@ function draw() {
     winCG.setVelocityXEach(0);
     winCG.setLifetimeEach(-1);
     
-     if(keyDown("UP_ARROW")) {
+     if(keyDown("i")) {
        reset();
      }
 }
@@ -197,16 +202,13 @@ function redCyclists(){
 }
 
 function like(){
-   obstacle = createSprite(1100,Math.round(random(50, 250)));
-   obstacle.scale =0.06;
-   obstacle.velocityX = -(6 + 2*distance/150);
-   obstacle.addAnimation("windd",wind1);
-   obstacle.setLifetime=170;
+   obstacle1 = createSprite(1100,Math.round(random(50, 250)));
+   obstacle1.scale =0.06;
+   obstacle1.velocityX = -(6 + 2*distance/150);
+   obstacle1.addAnimation("select_obstacle",wind1);
+   obstacle1.setLifetime=170;
    winCG.add(obstacle);
 }
-
-
-
 
 
 function reset(){
